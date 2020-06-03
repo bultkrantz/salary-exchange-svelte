@@ -15,7 +15,7 @@
 </style>
 
 <svelte:head>
-  <title>About</title>
+  <title>Home</title>
 </svelte:head>
 
 <h1>Välkommen</h1>
