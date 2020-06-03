@@ -61,12 +61,14 @@
   <ul>
     <li>
       <a aria-current={segment === undefined ? 'page' : undefined} href=".">
-        Start
+        Om löneväxling
       </a>
     </li>
     <li>
-      <a aria-current={segment === 'about' ? 'page' : undefined} href="about">
-        Om löneväxling
+      <a
+        aria-current={segment === 'calculator' ? 'page' : undefined}
+        href="calculator">
+        Kalkylator
       </a>
     </li>
 
