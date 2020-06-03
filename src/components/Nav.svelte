@@ -47,14 +47,13 @@
     display: block;
   }
 
-  h3 {
+  h4 {
     text-decoration: none;
     padding: 1em 0.5em;
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0px;
-    text-align: center;
+    top: 0;
+    left: 46%;
+    color: aliceblue;
   }
 </style>
 
@@ -74,5 +73,5 @@
     <!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
 		     the blog data when we hover over the link or tap it on a touchscreen -->
   </ul>
-  <h3>Löneväxling.se</h3>
+  <h4>Löneväxling.se</h4>
 </nav>
