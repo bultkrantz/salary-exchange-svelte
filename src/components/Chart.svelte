@@ -5,6 +5,10 @@
 
   let chart;
 
+  // JOHAN: Jag vet att ett av de mest omtyckta och mest använda 
+  // chart biblioteken just nu är D3 : https://observablehq.com/@d3/gallery
+  // Skulle nog bli mer jobb för dig, men du har mycket mer frihet!
+
   onMount(() => {
     chart = Highcharts.chart("chart", {
       chart: {

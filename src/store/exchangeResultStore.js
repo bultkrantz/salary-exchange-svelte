@@ -8,6 +8,10 @@ const exchangeResult = [{
     timeHorizon: 10
 }];
 
+// JOHAN: Jag vet inte riktigt vad den här ska göra, men den ser ju praktiskt taget 
+// identisk ut med chartFormStore, det här kanske är ett tillfälle då du vill 
+// använda: https://svelte.dev/docs#derived
+
 const { subscribe, set, update } = writable(exchangeResult);
 
 const updateExchangeResult = (chartFormValues) => update(() => {

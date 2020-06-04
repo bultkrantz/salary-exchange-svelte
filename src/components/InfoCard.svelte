@@ -4,7 +4,9 @@
   import { Icon } from "@smui/common";
 
   export let listItems = ["test", "test2"];
-  export let title;
+export let title;
+
+ // För att det ska bli mer korrekt HTML, så borde du göra något mer såhär:
 </script>
 
 <style lang="scss">
@@ -19,6 +21,10 @@
     width: 80%;
     margin: 0 auto;
   }
+
+  li {
+    list-style: url("/link/to/checkmark/image/or/svg");
+  }
 </style>
 
 <div class="card">
@@ -27,12 +33,13 @@
       <h2>{title}</h2>
     {/if}
     <Content>
+      <ul>
       {#each listItems as item}
-        <div>
-          <Icon class="material-icons" style="width: 30px;">checkmark</Icon>
+        <li>
           <span class="mdc-typography--headline4">{item}</span>
-        </div>
+        </li>
       {/each}
+      </ul>
     </Content>
   </Card>
 </div>

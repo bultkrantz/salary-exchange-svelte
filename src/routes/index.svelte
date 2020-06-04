@@ -1,5 +1,17 @@
 <script>
   import InfoCard from "../components/InfoCard.svelte";
+
+
+  
+   // JOHAN: Jag har ju jobbat mycket med optimering av Sapper projekt. Och kan säga
+   // att det generellt sett inte är bra att ha så mycket text i sina componenter/routes
+   // så om du vill få betydligt minder bundle size och snabbare sida så är det värt det
+   // att flytta ut allt innehåll i någon form av JSON struktur som du sen laddar så som
+   // de gjort här: https://github.com/sveltejs/sapper-template/blob/master/src/routes/blog/%5Bslug%5D.json.js
+  
+   // En annan grej som jag gör, som gör det lite lättare att skriva kod (tycker jag) är att jag lägger
+   // <style /> taggarna efter min html. Det gör det lättare att hoppa mellan script och html. Och html och css.
+   // Inte lika mycket skit ivägen :) 
 </script>
 
 <style>
@@ -17,6 +29,7 @@
   h2 {
     text-align: center;
   }
+
 </style>
 
 <svelte:head>

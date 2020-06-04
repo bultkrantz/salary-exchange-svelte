@@ -7,7 +7,9 @@ const calculateSalaryExchange = (props) => {
     let accumulatedSavings = 0;
     let accumulatedReturn = 0;
 
-    const result = new Array();
+	const result = new Array();
+	
+	// JOHAN: Snygg funktion!
 
     for (let index = 0; year <= timeHorizon; index++) {
         const yearsReturn =

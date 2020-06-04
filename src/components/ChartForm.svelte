@@ -15,6 +15,10 @@
   $: {
     exchangeResult.updateExchangeResult($chartFormValues);
   }
+
+  // JOHAN: Dina event handlers behöver inte vara wrappade i on:click={() => { chartFormValues.reset() }}
+  // Så länge metoden inte behöver ta emot några speciella parametrar som ex: ett index värde i en {#each}
+  // loop. Eller om event handlern bara vill ta emot event objektet. så räcker det att skriva on:click={charformValues.reset}
 </script>
 
 <style>
@@ -90,17 +94,17 @@
 
   <div class="settings">
     <Fab
-      on:click={() => {
-        chartFormValues.reset();
-      }}
+      on:click={
+        chartFormValues.reset
+      }
       extended>
       <Icon class="material-icons">autorenew</Icon>
       <Label>Nollställ</Label>
     </Fab>
     <Fab
-      on:click={() => {
-        chartFormValues.showExample();
-      }}
+      on:click={
+        chartFormValues.showExample
+      }
       extended>
       <Icon class="material-icons">poll</Icon>
       <Label>Exempel</Label>
