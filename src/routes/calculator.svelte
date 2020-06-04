@@ -1,11 +1,9 @@
 <script>
   import Chart from "../components/Chart.svelte";
   import ChartForm from "../components/ChartForm.svelte";
+  import settingValues from "../store/settingStore.js";
+  import { fade, blur, fly, slide, scale } from "svelte/transition";
 </script>
-
-<style>
-
-</style>
 
 <svelte:head>
   <title>Kalkylator</title>
@@ -13,4 +11,9 @@
 
 <h1>Välkommen</h1>
 <ChartForm />
-<Chart />
+
+{#if $settingValues.showGraph}
+  <div in:fly={{ x: 200 }} out:fly={{ x: -200 }}>
+    <Chart />
+  </div>
+{/if}

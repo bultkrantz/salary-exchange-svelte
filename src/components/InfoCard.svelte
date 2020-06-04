@@ -17,7 +17,7 @@
 
   .card {
     width: 80%;
-    margin-bottom: 20px;
+    margin: 0 auto;
   }
 </style>
 

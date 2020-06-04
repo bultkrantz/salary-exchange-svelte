@@ -3,37 +3,53 @@
   import HelperText from "@smui/textfield/helper-text/index";
   import NotchedOutline from "@smui/notched-outline";
   import FloatingLabel from "@smui/floating-label";
+  import Slider from "@smui/slider";
+  import Fab, { Label, Icon } from "@smui/fab";
+  import FormField from "@smui/form-field";
+  import Switch from "@smui/switch";
   import chartFormValues from "../store/chartFormStore.js";
+  import settingValues from "../store/settingStore.js";
+  import exchangeResult from "../store/exchangeResultStore.js";
   import calculateSalaryExhange from "../utils/calculateSalaryExchange";
 
-  let {
-    startAmount,
-    monthlySaving,
-    avarageYield,
-    timeHorizon
-  } = $chartFormValues;
+  $: {
+    exchangeResult.updateExchangeResult($chartFormValues);
+  }
 </script>
 
 <style>
+  .form-wrapper {
+    padding: 25px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
   .inline-block {
     display: inline-block;
     margin-left: 1em;
   }
+
+  .margins {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .settings {
+    border-color: gainsboro;
+    border-radius: 10px;
+    border-style: solid;
+    padding: 15px;
+  }
 </style>
 
-<form
-  on:change={() => calculateSalaryExhange({
-      startAmount,
-      monthlySaving,
-      avarageYield,
-      timeHorizon
-    })}>
-  <div>
+<div class="form-wrapper">
+  <h4>Fyll i alla värden för att se en graf på beräknad vinst</h4>
+  <div class="margins">
     <div class="inline-block">
       <Textfield
         type="number"
         variant="filled"
-        bind:value={startAmount}
+        bind:value={$chartFormValues.startAmount}
         label="Startvärde"
         input$aria-controls="helper-text-filled-a"
         input$aria-describedby="helper-text-filled-a" />
@@ -43,34 +59,59 @@
       <Textfield
         type="number"
         variant="filled"
-        bind:value={monthlySaving}
+        bind:value={$chartFormValues.monthlySaving}
         label="Månadssparande"
         input$aria-controls="helper-text-filled-a"
         input$aria-describedby="helper-text-filled-a" />
       <HelperText id="helper-text-filled-a">Skriv in månadssparande</HelperText>
     </div>
-  </div>
-
-  <div>
     <div class="inline-block">
       <Textfield
         type="number"
         variant="filled"
-        bind:value={avarageYield}
+        bind:value={$chartFormValues.avarageYield}
         label="Avkastning i procent"
         input$aria-controls="helper-text-filled-a"
         input$aria-describedby="helper-text-filled-a" />
       <HelperText id="helper-text-filled-a">Från 0 - 100%</HelperText>
     </div>
-    <div class="inline-block">
-      <Textfield
-        type="number"
-        variant="filled"
-        bind:value={timeHorizon}
-        label="Antal år"
-        input$aria-controls="helper-text-filled-a"
-        input$aria-describedby="helper-text-filled-a" />
-      <HelperText id="helper-text-filled-a">Skriv in antal år</HelperText>
-    </div>
   </div>
-</form>
+
+  <div class="margins">
+    <FormField align="end" style="display: flex;">
+      <Slider bind:value={$chartFormValues.timeHorizon} discrete />
+      <span
+        slot="label"
+        style="padding-right: 12px; width: max-content; display: block;">
+        Antal år
+      </span>
+    </FormField>
+  </div>
+
+  <div class="settings">
+    <Fab
+      on:click={() => {
+        chartFormValues.reset();
+      }}
+      extended>
+      <Icon class="material-icons">autorenew</Icon>
+      <Label>Nollställ</Label>
+    </Fab>
+    <Fab
+      on:click={() => {
+        chartFormValues.showExample();
+      }}
+      extended>
+      <Icon class="material-icons">poll</Icon>
+      <Label>Exempel</Label>
+    </Fab>
+    <FormField>
+      <Switch bind:checked={$settingValues.showGraph} />
+      <span slot="label">Visa graf</span>
+    </FormField>
+    <FormField>
+      <Switch bind:checked={$settingValues.showDataTable} />
+      <span slot="label">Visa datatabell</span>
+    </FormField>
+  </div>
+</div>

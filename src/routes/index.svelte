@@ -4,13 +4,18 @@
 
 <style>
   div {
-    margin-bottom: 40px;
+    margin-bottom: 100px;
   }
   h1 {
+    text-align: center;
     font-size: 2.8em;
     text-transform: uppercase;
     font-weight: 700;
-    margin: 0 1.5em 0.5em 0;
+    margin: 1em 0em 1em 0;
+  }
+
+  h2 {
+    text-align: center;
   }
 </style>
 

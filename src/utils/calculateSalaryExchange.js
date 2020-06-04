@@ -1,22 +1,4 @@
-// export interface ICalculateSalaryExchange {
-//     monthlySaving: number;
-//     startAmount?: number;
-//     avarageYield: number;
-//     timeHorizon: number;
-//   }
-
-//   export interface IAnnualResult {
-//     year: number;
-//     startAmount: number;
-//     yearlySaving: number;
-//     accumulatedSavings: number;
-//     yearsReturn: number;
-//     accumulatedReturn: number;
-//     finalValue: number;
-//   }
-
 const calculateSalaryExchange = (props) => {
-    console.log(props);
     const { monthlySaving, avarageYield, startAmount = 0, timeHorizon } = props;
 
     let accumulatedStartValue = startAmount;
@@ -45,7 +27,6 @@ const calculateSalaryExchange = (props) => {
         accumulatedStartValue = finalValue;
         year++;
     }
-    console.log(result)
     return result;
 };
 
