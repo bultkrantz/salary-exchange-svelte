@@ -7,6 +7,7 @@ import svelte from "rollup-plugin-svelte";
 import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import config from "sapper/config/rollup.js";
+import autoPreprocess from 'svelte-preprocess'
 import pkg from "./package.json";
 import postcss from "rollup-plugin-postcss";
 
@@ -70,6 +71,7 @@ export default {
 				"process.env.NODE_ENV": JSON.stringify(mode)
 			}),
 			svelte({
+				preprocess: autoPreprocess(),
 				dev,
 				hydratable: true,
 				emitCss: true
@@ -123,6 +125,7 @@ export default {
 				"process.env.NODE_ENV": JSON.stringify(mode)
 			}),
 			svelte({
+				preprocess: autoPreprocess(),
 				generate: "ssr",
 				dev
 			}),

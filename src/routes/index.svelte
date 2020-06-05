@@ -1,8 +1,28 @@
 <script>
+  import { fade } from "svelte/transition";
+  import LinearProgress from "@smui/linear-progress";
   import InfoCard from "../components/InfoCard.svelte";
+
+  async function fetchData(url) {
+    const result = await fetch(url);
+    return await result.json();
+  }
+
+  let cms = fetchData("http://localhost:3001/cms");
+  let api = fetchData("http://localhost:3001/api");
+
 </script>
 
-<style>
+<style type="text/scss">
+  .error {
+    background: #ffc5c5;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
   div {
     margin-bottom: 100px;
   }
@@ -17,55 +37,91 @@
   h2 {
     text-align: center;
   }
+  .skeleton-box {
+    display: block;
+    margin: 0 auto;
+    min-height: 1em;
+    position: relative;
+    overflow: hidden;
+    background-color: #f1eef1;
+    margin-bottom: 20px;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(#fff, 0) 0,
+        rgba(#fff, 0.2) 20%,
+        rgba(#fff, 0.5) 60%,
+        rgba(#fff, 0)
+      );
+      animation: shimmer 2s infinite;
+      content: "";
+    }
+
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  }
+  .skeleton-container {
+    margin: 4em 0em 4em 0;
+  }
 </style>
 
 <svelte:head>
   <title>Home</title>
 </svelte:head>
 
-<h1>Välkommen</h1>
-
-<div>
-  <h2>Vad är löneväxling?</h2>
-  <p>
-    Löneväxling är en överenskommelse mellan en arbetstagare och en arbetsgivare
-    om att avstå en del av sin bruttolön (innan inkomstskatten dras) och
-    istället låta arbetsgivaren betala in den summan till den anställdes
-    pension. Inkomstskatten dras först när du påbörjar utbetalningen av din
-    pension.
-  </p>
-
-  <InfoCard
-    listItems={['En snöbollseffekt som gör att ditt sparande växer exponentiellt', 'Du får ränta på avkastningen ditt kapital genererat tidigare år', 'Ju högre ränta på ditt sparande desto snabbare kan dina pengar växa']} />
+{#await cms}
+  <div class="skeleton-container">
+    <span class="skeleton-box" style="width:50%; height: 3em;" />
+  </div>
+{:then {title}}
+  <div in:fade={{ duration: 2000 }}>
+    <h1>{title}</h1>
+  </div>
+  {:catch error}
+<div class="error">
+  <p>Ooops! Ett fel har uppstått, försök igen senare!</p>
+  <p>{error}</p>
 </div>
+{/await}
 
-<div>
-  <h2>Få mera i pension.</h2>
-  <p>
-    Eftersom skatten på pensionssparande idag är ca 6 % lägre än
-    arbetsgivaravgiften på lön så brukar arbetsgivaren istället då betala dessa
-    6 % extra i den anställdes pensionsfond. Då de varken ska kosta eller vara
-    sparsamt för arbetsgivaren att låta den anställde pensionsspara.
-  </p>
+{#await api}
+  <div class="skeleton-container">
+    <span class="skeleton-box" style="width:100%; height: 2em;" />
+    <span class="skeleton-box" style="width:100%;" />
+    <span class="skeleton-box" style="width:100%;" />
+    <span class="skeleton-box" style="width:100%;" />
+  </div>
+  <div class="skeleton-container">
+    <span class="skeleton-box" style="width:100%; height: 2em;" />
+    <span class="skeleton-box" style="width:100%;" />
+    <span class="skeleton-box" style="width:100%;" />
+    <span class="skeleton-box" style="width:100%;" />
+  </div>
 
-  <InfoCard
-    listItems={['Behöver inte betala skatt på pengarna förrän de betalas ut i pension. Vilket innebär att du får högre ränta på hela beloppet under lång tid samtidigt som inkomstskatten på pengarna antagligen blir lägre när de betalas ut då de flesta får mindre i pension än i lön.', 'Den lön du tjänar över 43 309kr är inte pensionsgrundande i det statliga pensionssystemet, och dessutom betalar du högre skatt på den inkomsten vilket då gör de perfekt att spara den överskjutande delen.']}
-    title="Fördelar med löneväxling" />
+{:then value}
+  <div in:fade={{ duration: 2000 }}>
+    {#each value.informationSections as section}
+      <div>
+        <h2>{section.title}</h2>
+        <p>{section.body}</p>
+
+        <InfoCard title={section.usp.title} listItems={section.usp.list} />
+      </div>
+    {/each}
+  </div>
+{:catch error}
+<div class="error">
+  <p>Ooops! Ett fel har uppstått, försök igen senare!</p>
+  <p>{error}</p>
 </div>
-
-<div>
-
-  <h2>Löneväxling passar inte alla.</h2>
-  <p>
-    Din allmänna pension, sjukpenning, föräldrapenning och a-kasseersättning
-    beräknas utifrån den ersättningsgrundande inkomst du har för var och en av
-    dessa ersättningar. När din bruttolön sänks påverkas de, dock inte om din
-    månadslön eller årslön efter löneväxling ligger över inkomsttaket för de
-    olika ersättningsgrundande inkomsterna. Som för den allmänna pensionen 2019
-    är 8,07 * inkomstbasbeloppet 2019 (64 400) som är 519 708kr i årsinkomst
-    eller 43 309kr i månaden.
-  </p>
-  <InfoCard
-    listItems={['Den lön som du växlar bort sänker din sjuk- och pensionsgrundande inkomst. Det betyder att vissa ersättningar blir lägre både på sikt och i nutid. ', 'Inom kollektivavtalad tjänstepension låser man pengarna till åtminstone 55 års ålder.', 'Din ITP sjukpension som du får vid långvarig sjukdom blir lägre. Om du efter löneväxlingen tjänar under inkomsttaket för respektive förmån, blir sjukpenning, föräldrapenning och tillfällig föräldrapenning lägre. Under vissa förutsättningar kan även den allmänna pensionen bli lägre.']}
-    title="Nackdelar med löneväxling" />
-</div>
+{/await}

@@ -7,7 +7,7 @@
   export let title;
 </script>
 
-<style lang="scss">
+<style>
   @import "@material/typography/mdc-typography";
 
   h2 {

@@ -10,7 +10,7 @@
   <title>Kalkylator</title>
 </svelte:head>
 
-<h1>Välkommen</h1>
+<h1>Kalkylator</h1>
 <ChartForm />
 
 {#if $settingValues.showGraph}
