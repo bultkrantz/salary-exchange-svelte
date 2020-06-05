@@ -7,17 +7,12 @@ const chartFormValues = {
     timeHorizon: 0,
 };
 
-const { subscribe, set, update } = writable(chartFormValues);
+const { subscribe, set, update } = writable({ ...chartFormValues });
 
 export default {
     subscribe,
     set,
-    reset: () => console.log(chartFormValues) || set({
-        startAmount: 0,
-        monthlySaving: 0,
-        avarageYield: 0,
-        timeHorizon: 0,
-    }),
+    reset: () => console.log(chartFormValues) || set({ ...chartFormValues }),
     showExample: () => set({
         startAmount: 1000,
         monthlySaving: 500,

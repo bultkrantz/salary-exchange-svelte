@@ -40,6 +40,11 @@
     border-style: solid;
     padding: 15px;
   }
+
+  .switch {
+    display: inline-block;
+    margin-left: 15px;
+  }
 </style>
 
 <div class="form-wrapper">
@@ -105,13 +110,17 @@
       <Icon class="material-icons">poll</Icon>
       <Label>Exempel</Label>
     </Fab>
-    <FormField>
-      <Switch bind:checked={$settingValues.showGraph} />
-      <span slot="label">Visa graf</span>
-    </FormField>
-    <FormField>
-      <Switch bind:checked={$settingValues.showDataTable} />
-      <span slot="label">Visa datatabell</span>
-    </FormField>
+    <div class="switch">
+      <FormField>
+        <Switch bind:checked={$settingValues.showGraph} />
+        <span slot="label">Visa graf</span>
+      </FormField>
+    </div>
+    <div class="switch">
+      <FormField>
+        <Switch bind:checked={$settingValues.showDataTable} />
+        <span slot="label">Visa datatabell</span>
+      </FormField>
+    </div>
   </div>
 </div>
