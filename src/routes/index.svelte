@@ -1,28 +1,29 @@
-<script>
-  import { fade } from "svelte/transition";
-  import LinearProgress from "@smui/linear-progress";
-  import InfoCard from "../components/InfoCard.svelte";
-
-  async function fetchData(url) {
-    const result = await fetch(url);
-    return await result.json();
-  }
-
-  let cms = fetchData("http://localhost:3001/cms");
-  let api = fetchData("http://localhost:3001/api");
+<script context="module">
+	export async function preload(page, session) {
+  const cms = await this.fetch("index.cms").then((res) => res.json());
+  
+  return { cms}
+};
 
 </script>
 
+<script>
+  import {onMount } from "svelte"
+  import { fade } from "svelte/transition";
+  import LinearProgress from "@smui/linear-progress";
+  import InfoCard from "../components/InfoCard.svelte";
+  import ErrorCard from "../ui/ErrorCard.svelte";
+  export let cms;
+
+  const fetchApi = async () => (
+    process.browser && await fetch("index.json").then((res) => res.json())
+  );
+  
+  const api = fetchApi();
+  </script>
+
+
 <style type="text/scss">
-  .error {
-    background: #ffc5c5;
-    border-radius: 10px;
-    margin: 0 auto;
-    width: 50%;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
   div {
     margin-bottom: 100px;
   }
@@ -88,10 +89,7 @@
     <h1>{title}</h1>
   </div>
   {:catch error}
-<div class="error">
-  <p>Ooops! Ett fel har uppstått, försök igen senare!</p>
-  <p>{error}</p>
-</div>
+  <ErrorCard {error}/>
 {/await}
 
 {#await api}
@@ -120,8 +118,5 @@
     {/each}
   </div>
 {:catch error}
-<div class="error">
-  <p>Ooops! Ett fel har uppstått, försök igen senare!</p>
-  <p>{error}</p>
-</div>
+  <ErrorCard {error}/>
 {/await}

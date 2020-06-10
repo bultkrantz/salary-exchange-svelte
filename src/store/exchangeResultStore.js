@@ -11,7 +11,6 @@ const exchangeResult = [{
 const { subscribe, set, update } = writable(exchangeResult);
 
 const updateExchangeResult = (chartFormValues) => update(() => {
-    console.log(chartFormValues);
     const result = calculateSalaryExhange({
         startAmount: chartFormValues.startAmount,
         monthlySaving: chartFormValues.monthlySaving,

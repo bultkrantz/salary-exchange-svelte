@@ -1,17 +1,3 @@
-const express = require('express');
-const app = express();
-const port = 3001;
-
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
-const cms = {
-    title: "Välkommen"
-}
-
 const api = {
     informationSections: [
         {
@@ -51,18 +37,11 @@ const api = {
     ]
 }
 
-app.get('/cms', (req, res) => {
-    setTimeout(() => {
-        // res.sendStatus(500);
-        res.send(JSON.stringify(cms))
-    }, 1500)
-})
 
-app.get('/api', (req, res) => {
+export async function get(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
     setTimeout(() => {
-        res.sendStatus(500);
-        // res.send(JSON.stringify(api))
-    }, 3000)
-})
 
-app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
+        res.end(JSON.stringify(api));
+    }, (3000));
+}
